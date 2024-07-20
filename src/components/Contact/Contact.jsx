@@ -1,10 +1,18 @@
 import { PhonebookContactsListItem, PhonebookContactsListItemName, DeleteBtn } from "./Contact.styled";
 
-const Contact = ({ name, number, id, handleDeleteContact }) => {
+import { useDispatch } from "react-redux";
+
+import { deleteContact } from "../../redux/contactsSlice";
+
+const Contact = ({ contact: { name, number, id } }) => {
+
+  const dispatch = useDispatch();
+  const handleDeleteContact = () => dispatch(deleteContact(id));
+  
   return (
     <PhonebookContactsListItem>
       <PhonebookContactsListItemName>{name}: {number}</PhonebookContactsListItemName>
-      <DeleteBtn onClick={() => handleDeleteContact(id)}>Delete</DeleteBtn>
+      <DeleteBtn onClick={handleDeleteContact}>Delete</DeleteBtn>
     </PhonebookContactsListItem>
   );
 };

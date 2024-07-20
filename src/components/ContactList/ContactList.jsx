@@ -1,38 +1,27 @@
-
-// const ContactList = ({filteredContacts, handleDeleteContact}) => {
-//         return (
-//         <PhonebookContactsList>
-
-//             {filteredContacts.map(({name, number, id}) => {
-
-//             return (
-//                     <PhonebookContactsListItem key={id}>
-//                     <PhonebookContactsListItemName>{name}: {number}</PhonebookContactsListItemName>
-//                     <DeleteBtn onClick={() => handleDeleteContact(id)}>Delete</DeleteBtn>
-//                     </PhonebookContactsListItem>
-//             )
-//           })
-
-//         }
-//         </PhonebookContactsList>
-//         );
-// };
-
-// export default ContactList;
-
 import { PhonebookContactsList } from "./ContactList.styled";
-import Contact from "../Contact/Contact";
+import { useSelector } from "react-redux";
+import { selectContacts } from "../../redux/contactsSlice";
+import { selectNameFilter } from "../../redux/filtersSlice";
+import Contact from '../Contact/Contact';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-const ContactList = ({ filteredContacts, handleDeleteContact }) => {
+const ContactList = () => {
+
+const contacts = useSelector(selectContacts);
+const filter = useSelector(selectNameFilter);
+  
+  console.log(contacts);
+  
+  const filteredContacts = contacts.filter(contact => 
+    contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <PhonebookContactsList>
-      {filteredContacts.map(({ name, number, id }) => (
-        <Contact
-          key={id}
-          name={name}
-          number={number}
-          id={id}
-          handleDeleteContact={handleDeleteContact}
+      {filteredContacts.map(contact => (
+        <Contact contact={contact}
+          key={contact.id}
         />
       ))}
     </PhonebookContactsList>
