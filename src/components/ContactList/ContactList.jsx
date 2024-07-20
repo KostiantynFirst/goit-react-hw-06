@@ -9,9 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const ContactList = () => {
 
 const contacts = useSelector(selectContacts);
-const filter = useSelector(selectNameFilter);
-  
-  console.log(contacts);
+  const filter = useSelector(selectNameFilter);
   
   const filteredContacts = contacts.filter(contact => 
     contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
